@@ -1,0 +1,83 @@
+{
+  "Mentors": [],
+  "koders": [
+    {
+      "id": 1,
+      "name": "Emilio",
+      "age": 29,
+      "nationality": "Mexican",
+      "generationNumber": 15,
+      "hobbies": [
+        "bataca",
+        "diseño"
+      ],
+      "sex": "v",
+      "city": "GDL"
+    },
+    {
+      "id": 2,
+      "name": "Erick",
+      "age": 28,
+      "nationality": "Mexican",
+      "generationNumber": 15,
+      "hobbies": [
+        "futbol",
+        "nadar"
+      ],
+      "sex": "v",
+      "city": "CDMX"
+    },
+    {
+      "id": 3,
+      "name": "job",
+      "age": 33,
+      "nationality": "Mexican",
+      "generationNumber": 15,
+      "hobbies": [
+        "gym",
+        "ps"
+      ],
+      "sex": "v",
+      "city": "CDMX"
+    },
+    {
+      "id": 4,
+      "name": "Ismael",
+      "age": 40,
+      "nationality": "Mexican",
+      "generationNumber": 15,
+      "hobbies": [
+        "musica",
+        "chorcha"
+      ],
+      "sex": "v",
+      "city": "CDMX"
+    },
+    {
+      "id": 5,
+      "name": "Sara",
+      "age": 32,
+      "nationality": "Mexican",
+      "generationNumber": 15,
+      "hobbies": [
+        "caminar",
+        "leer"
+      ],
+      "sex": "m",
+      "city": "Durango"
+    },
+    {
+      "id": 6,
+      "name": "Ivonne",
+      "age": 31,
+      "nationality": "mexican",
+      "generatioNumber": 15,
+      "hobbies": [
+        "bailar",
+        "cine"
+      ],
+      "sex": "f",
+      "city": "Toluca"
+    }
+  ]
+}
