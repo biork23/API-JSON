@@ -1,7 +1,7 @@
 
+const { response } = require('express')
 const express = require('express')
-const fs = require('fs')
-const fsPromise= require('fs/promises')
+const fs = require('fs/promises')
 
 
 const app = express()
@@ -40,7 +40,7 @@ app.get('/file-promise', (request, response)=> {
 //     response.send(data)
 // })
 app.get('/koders',async (request, response) => {
-    const data = await fsPromise.readFile('kodemia.json', 'utf-8')
+    const data = await fs.readFile('kodemia.json', 'utf-8')
     const db = JSON.parse(data)
     let kodersFound = db.koders
 
@@ -78,7 +78,7 @@ app.get('/koders',async (request, response) => {
 
 app.get('/koders/:id', async (request, response) =>{
     const id = parseInt(request.params.id)
-    const data = await fsPromise.readFile('kodemia.json', 'utf-8')
+    const data = await fs.readFile('kodemia.json', 'utf-8')
     const db = JSON.parse(data)
     const koderFound = db.koders.filter((koder) => {
         return koder.id === id
@@ -88,7 +88,7 @@ app.get('/koders/:id', async (request, response) =>{
 })
 //crear un koder
 app.post('/koders', async (request, response) => {
-const data = await fsPromise.readFile('kodemia.json', 'utf-8')
+const data = await fs.readFile('kodemia.json', 'utf-8')
 const db = JSON.parse(data)
 
 const newKoderId = db.koders.length + 1
@@ -99,7 +99,7 @@ const newKoderData = {
 
 db.koders.push(newKoderData)
 const dbAsSring = JSON.stringify(db, '\n', 2)
-await fsPromise.writeFile('kodemia.json', dbAsSring, 'utf-8')
+await fs.writeFile('kodemia.json', dbAsSring, 'utf-8')
 
 
     response.json(db.koders)
@@ -107,13 +107,13 @@ await fsPromise.writeFile('kodemia.json', dbAsSring, 'utf-8')
 //metodo delete
 app.delete('/koders/:id', async (request, response)=> {
     const id = parseInt(request.params.id)
-    const data = await fsPromise.readFile('kodemia.json', 'utf-8')
+    const data = await fs.readFile('kodemia.json', 'utf-8')
     const db = JSON.parse(data)
 
     const newKodersArray = db.koders.filter((koder) => id != koder.id)
     db.koders = newKodersArray
     const dbAsString = JSON.stringify(db, '\n', 2)
-    await fsPromise.writeFile('kodemia.json', dbAsString, 'utf-8')
+    await fs.writeFile('kodemia.json', dbAsString, 'utf-8')
     response.json(db.koders)
 
 
@@ -129,7 +129,7 @@ app.patch('/koders/:id', async(request, response)=>{
          })
          return
     }
-    const data = await fsPromise.readFile('kodemia.json', 'utf-8')
+    const data = await fs.readFile('kodemia.json', 'utf-8')
     const db = JSON.parse(data)
     const koderFoundIndex = db.koders.findIndex((koder) => id === koder.id)
     if (koderFoundIndex < 0 ){
@@ -146,10 +146,85 @@ app.patch('/koders/:id', async(request, response)=>{
     }
 
     const dbAsString = JSON.stringify(db, '\n', 2)
-    await fsPromise.writeFile('kodemia.json', dbAsString, 'utf-8')
+    await fs.writeFile('kodemia.json', dbAsString, 'utf-8')
     response.json(db.koders[koderFoundIndex])
 
 })
+
+app.get('/mentors', async (request,  response) => {
+    const data = await fs.readFile('kodemia.json', 'utf-8')
+    const db = JSON.parse(data)
+    const mentorsFound = db.mentors
+
+
+    response.json(mentorsFound)
+
+})
+
+
+app.get('/mentors/:id', async (request, response) => {
+    const id = parseInt(request.params.id)
+    const data = await fs.readFile('kodemia.json', 'utf-8')
+    const db = JSON.parse(data)
+    const getMentors = db.mentors.filter((mentor)=>{
+        return mentor.id === id
+    })
+    response.json(getMentors)
+})
+ app.post('/mentors', async (request, response) => {
+    const data = await fs.readFile('kodemia.json', 'utf-8')
+    const db = JSON.parse(data)
+    const newMentorId = db.mentors.length + 1
+    const newmentor = {
+        id: newMentorId,
+        ...request.body
+    }
+    db.mentors.push(newmentor)
+    const dbToString = JSON.stringify(db, '\n', 2)
+    await fs.writeFile('kodemia.json', dbToString, 'utf-8')
+
+    response.json(db.mentors)
+ })
+
+ app.patch('/mentors/:id', async (request, response) => {
+     const data = await fs.readFile('kodemia.json', 'utf-8')
+     const id = parseInt(request.params.id)
+     const db = JSON.parse(data)
+
+     const mentorFoundId = db.mentors.findIndex((mentor) => {
+         return id == mentor.id
+     })
+
+     db.mentors[mentorFoundId] = {
+        ...db.mentors[mentorFoundId],
+        ...request.body,
+    }
+
+    const dbToString = JSON.stringify(db, '\n', 2)
+    await fs.writeFile('kodemia.json', dbToString, 'utf-8')
+    response.json(db.mentors[mentorFoundId])
+     
+ })
+
+ app.delete('/mentors/:id', async (request, response) => {
+    const data = await fs.readFile('kodemia.json', 'utf-8')
+    const id = parseInt(request.params.id)
+    const db = JSON.parse(data)
+
+    const newMentor = db.mentors.filter((mentor) => {
+        return mentor.id != id
+    })
+    db.mentors = newMentor
+
+    const dbToString = JSON.stringify(db, '\n', 2 )
+    await fs.writeFile('kodemia.json', dbToString, 'utf-8')
+    response.json(db.mentors)
+
+ })
+
+
+
+
 
 
 app.listen(8080, () => {
